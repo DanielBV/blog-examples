@@ -12,6 +12,11 @@ Contains the code of the three first posts about regular expressions. The result
     * `regex.js`: A wrapper for the whole regex.
 * `index.js`: A simple test case for the regex. Feel free to modify it.
 
+## Installation
+```
+cd ..
+npm install
+``` 
 ## Running the testcase
 ```
 node index.js

@@ -1,4 +1,6 @@
 const {RegexAlternative, AtomicPattern} = require('../../grammar/ast');
+const {EPSILON} = require('../../grammar/astBuilder');
+
 const {ASTERISK, LAZY_ASTERISK, PLUS, LAZY_PLUS, OPTIONAL, LAZY_OPTIONAL} = require('../../grammar/astBuilder');
 const {CharacterMatcher, EngineNFA, EpsilonMatcher} = require('./nfa');
 
@@ -73,7 +75,8 @@ class NFABuilder {
     }
 
     _atomicPatternNFA(character) {
-        return this._oneStepNFA(new CharacterMatcher(character));
+        const matcher = character === EPSILON ? new EpsilonMatcher() : new CharacterMatcher(character);
+        return this._oneStepNFA(matcher);
     }
 
     _oneStepNFA(matcher) {

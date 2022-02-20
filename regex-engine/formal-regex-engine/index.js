@@ -12,6 +12,7 @@ const CASES = [
     ["(a|b)+c*", "abababa"],
     ["a+c?b+", "acb"],
     ["a+c?b+", "accb"],
+    ["a(|)b", "ab"],
 ];
 
 for (const [regex, input] of CASES) {

@@ -1,4 +1,4 @@
-const {RegexAlternative, AtomicPattern} = require('../../grammar/ast');
+const {RegexAlternative, Regex,  AtomicPattern} = require('../../grammar/ast');
 const {EPSILON} = require('../../grammar/astBuilder');
 const {ASTERISK, LAZY_ASTERISK, PLUS, LAZY_PLUS, OPTIONAL, LAZY_OPTIONAL} = require('../../grammar/astBuilder');
 const {CharacterMatcher, EngineNFA, EpsilonMatcher} = require('./nfa');
@@ -8,6 +8,7 @@ const EPSILON_MATCHER = new EpsilonMatcher();
 class NFABuilder {
     constructor() {
         this.stateNumber = 0;
+        this.groupNumber = 0;
     }
 
     newState() {
@@ -20,10 +21,21 @@ class NFABuilder {
         this.stateNumber = 0;
     }
 
+    newGroup() {
+        const c = this.groupNumber;
+        this.groupNumber++;
+        return c;
+    }
+
+    resetGroupNumbers() {
+        this.groupNumber = 0;
+    }
+
 
     // This is the entry point from outside. 
     regexToNFA(regexAST) {
         this.resetStateNumbers();
+        this.resetGroupNumbers();
         return this._regexToNFA(regexAST);
     }
 
@@ -37,6 +49,7 @@ class NFABuilder {
     _singleRegexToNFA(regexAST) {
         let nfa = null;
         // A regex is just a series of subpatterns. We iterate through them and concatenate them to 'nfa'
+        const groupName = regexAST.isCapturingGroup() ? regexAST.groupName || this.newGroup() : null;
         for (const c of regexAST.subpatterns) {
             let baseBuilder, current, baseIsCapturing, namedGroup = null;
     
@@ -46,6 +59,8 @@ class NFABuilder {
             } else if (c.child instanceof RegexAlternative || c.child instanceof Regex) { // Groups
                 baseIsCapturing = c.child.isCapturingGroup();
                 baseBuilder = () => this._regexToNFA(c.child);
+            } else {
+                console.log
             }
     
             //Second: We apply the quantifier (if there is one)
@@ -70,6 +85,7 @@ class NFABuilder {
                 // Concatenate 'current' to the overall nfa
                 nfa.appendNFA(current, nfa.endingStates[0]);
         }
+        if (groupName !== null) nfa.addGroup(nfa.initialState, nfa.endingStates[0], groupName); 
         return nfa;
     }
 
@@ -122,6 +138,7 @@ class NFABuilder {
     }
 
     _alternativeToNFA(alternativeAst) {
+        const groupName = alternativeAst.isCapturingGroup() ? alternativeAst.groupName || this.newGroup() : null;
         const nfa = new EngineNFA(); 
         const start = this.newState();
         nfa.addState(start);
@@ -140,6 +157,7 @@ class NFABuilder {
         // Point the end state of each alternative to the union end state
         endingStates.forEach(x => nfa.addTransition(x, end, new EpsilonMatcher()));
         nfa.setEndingStates([end]);
+        if (groupName !== null) nfa.addGroup(start, end, groupName);
         return nfa;
     }
 }

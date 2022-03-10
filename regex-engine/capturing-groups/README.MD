@@ -1,9 +1,13 @@
 # Formal regex engine
 
-Contains the code of the three first posts about regular expressions. The result is a engine for formal regular expressions.
+Contains the code of the four first posts about regular expressions. The result is a engine for formal regular expressions.
 * [Introduction](https://www.abstractsyntaxseed.com/blog/regex-engine/introduction) (https://www.abstractsyntaxseed.com/blog/regex-engine/introduction)
 * [Implementing a NFA](https://www.abstractsyntaxseed.com/blog/regex-engine/implementing-a-nfa) (https://www.abstractsyntaxseed.com/blog/regex-engine/implementing-a-nfa)
 * [Building a NFA from a regex](https://www.abstractsyntaxseed.com/blog/regex-engine/regex-to-nfa) (https://www.abstractsyntaxseed.com/blog/regex-engine/regex-to-nfa)
+* [Adding Capturing groups](https://www.abstractsyntaxseed.com/blog/regex-engine/capturing-groups) (https://www.abstractsyntaxseed.com/blog/regex-engine/capturing-groups)
+
+**The main difference from the formal regex engine** is that it allows capturing groups, named capturing groups and non capturing groups. Also
+executing the regex now returns an object like `{groups:{"0": "abcd", "namedGroup": "ab"}}`. The whole string matched is always in group 0.
 
 ## File structure
 * `src`
@@ -23,7 +27,8 @@ node index.js
 ``` 
 
 ## Allowed syntax
-Currently, `regex.compute(string)` returns either `true` if it matches the string or `false` otherwise.
+Currently, `regex.compute(string)` returns an object with a `group` attribute if it matches the string or `null` otherwise. `group` is a object, 
+the keys are the name of the group and the value is the substring they matched.
 
 ### Quantifiers
 Quantifiers specify how many times a part of the regular expression should be repeated.
@@ -40,5 +45,7 @@ Quantifiers are greedy by default, so they'll match as much input as they can. T
 * `a|b`: Matches `a` or `b`
     * Empty alternatives are allowed: `(a|)` is equivalent to `a?`
 
-### Non-capturing groups
-* `(ab|(cd))`
+### Capturing groups:
+* Capturing groups: `(ab)`
+* Non-capturing groups: `(?:ab)`
+* Named-capturing groups: `(?<name>ab)`

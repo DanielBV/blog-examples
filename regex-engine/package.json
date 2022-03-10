@@ -4,15 +4,15 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1",
-      "grammar": "antlr4 ./common/grammar/regex.g4 -o ./common/grammar/generated -Dlanguage=JavaScript -visitor -no-listener"
+        "test": "jest",
+        "grammar": "antlr4 ./common/grammar/regex.g4 -o ./common/grammar/generated -Dlanguage=JavaScript -visitor -no-listener"
     },
     "author": "",
     "license": "ISC",
     "devDependencies": {
+        "jest": "^27.5.1"
     },
     "dependencies": {
-      "antlr4": "4.8.0"
+        "antlr4": "4.8.0"
     }
-  }
-  
+}

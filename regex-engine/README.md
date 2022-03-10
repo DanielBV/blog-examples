@@ -7,7 +7,7 @@ is that the code here should be a bit cleanear, since I improved while I was wri
 ## Folder structure
 * `grammar`: Contains the parser. It's common to every iteration (though not all iterations allow all the syntax)
 * `formal-regex-engine`: First iteration of the engine. Only allows formal regex syntax. The code is from the first three posts of the season.
-
+* `capturing-groups`: Second iteration. Allows formal regex syntax extended to allow capturing groups, named capturing groups and non capturing groups.
 Each iteration has a README with more details about its files.
 
 ## Installation

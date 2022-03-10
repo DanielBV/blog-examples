@@ -5,6 +5,7 @@
     "main": "index.js",
     "scripts": {
         "test": "jest",
+        "testCapturing": "jest ./capturing-groups",
         "grammar": "antlr4 ./common/grammar/regex.g4 -o ./common/grammar/generated -Dlanguage=JavaScript -visitor -no-listener"
     },
     "author": "",

@@ -21,9 +21,9 @@ executing the regex now returns an object like `{groups:{"0": "abcd", "namedGrou
 cd ..
 npm install
 ``` 
-## Running the testcase
+## Running the tests 
 ```
-node index.js
+npm run testCapturing
 ``` 
 
 ## Allowed syntax

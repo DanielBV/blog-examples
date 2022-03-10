@@ -7,7 +7,7 @@ Contains the code of the four first posts about regular expressions. The result 
 * [Adding Capturing groups](https://www.abstractsyntaxseed.com/blog/regex-engine/capturing-groups) (https://www.abstractsyntaxseed.com/blog/regex-engine/capturing-groups)
 
 **The main difference from the formal regex engine** is that it allows capturing groups, named capturing groups and non capturing groups. Also
-executing the regex now returns an object like `{groups:{"0": "abcd", "namedGroup": "ab"}}`. The whole string matched is always in group 0.
+executing the regex now returns an object like `{groups:{"0": "abcd", "namedGroup": "ab"}}`. The whole matched string is always in group 0.
 
 ## File structure
 * `src`

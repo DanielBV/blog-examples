@@ -58,9 +58,15 @@ class AtomicPattern {
 class DotPattern {
 }
 
-class CharacterClass {
-    constructor(clazz) {
-        this.class = clazz;
+
+class ComplexClassRange {
+    constructor(start, end) {
+        this.start = start;
+        this.end = end;
+    }
+
+    matches(c) {
+        return c >= this.start && this.end >= c;
     }
 }
 
@@ -73,9 +79,11 @@ class ComplexClass {
     }
 
     matches(c) {
-        return this.chars.includes(c) || this.ranges.some(([start, end]) => c >= start && end >= c);
+        const base = this.chars.includes(c) || this.ranges.some(x => x.matches(c));
+        return this.negated ? !base : base;
     }
 }
+
 
 class DollarAnchor {
 
@@ -85,4 +93,4 @@ class CaretAnchor {
     
 }
 
-Object.assign(exports, {Regex, Expression, RegexAlternative, AtomicPattern, DotPattern, CharacterClass, ComplexClass, DollarAnchor, CaretAnchor});
+Object.assign(exports, {Regex, Expression, RegexAlternative, AtomicPattern, DotPattern, ComplexClass, DollarAnchor, CaretAnchor, ComplexClassRange});

@@ -1,5 +1,5 @@
 const {regexVisitor: RegexVisitor} = require('./generated/regexVisitor');
-const {Regex, Expression, AtomicPattern, RegexAlternative, DotPattern, CharacterClass, ComplexClass, DollarAnchor, CaretAnchor} = require('./ast');
+const {Regex, Expression, AtomicPattern, RegexAlternative, DotPattern, ComplexClass, DollarAnchor, CaretAnchor, ComplexClassRange} = require('./ast');
 const EPSILON = Symbol("epsilon");
 const ASTERISK = Symbol("*");
 const PLUS = Symbol("+");
@@ -7,6 +7,20 @@ const OPTIONAL = Symbol("?");
 const LAZY_ASTERISK = Symbol("*?");
 const LAZY_PLUS = Symbol("+?");
 const LAZY_OPTIONAL = Symbol("??");
+
+const SHORTHAND_CHARACTER_CLASSES = {
+    "\\d": new ComplexClass([], [new ComplexClassRange("0", "9")], "\d", false),
+    "\\D": new ComplexClass([], [new ComplexClassRange("0", "9")], "\D", true),
+    "\\w": new ComplexClass(["_"], [new ComplexClassRange("A", "Z"), new ComplexClassRange("a", "z"), new ComplexClassRange("0", "9")], "\w", false),
+    "\\W": new ComplexClass(["_"], [new ComplexClassRange("A", "Z"), new ComplexClassRange("a", "z"), new ComplexClassRange("0", "9")], "\W", true),
+    "\\s": new ComplexClass( [" ", "\f", "\n", "\r", "\t", "\v", "\u00a0", "\u1680", "\u2028","\u2029","\u202f", "\u205f", "\u3000", "\ufeff"],
+       [new ComplexClassRange("\u2000", "\u200a")], "\s", false),
+    "\\S": new ComplexClass( [" ", "\f", "\n", "\r", "\t", "\v", "\u00a0", "\u1680", "\u2028","\u2029","\u202f", "\u205f", "\u3000", "\ufeff"],
+       [new ComplexClassRange("\u2000", "\u200a")], "\S", true),
+};
+
+const ESPECIAL_ESCAPE_CHARACTERS = {"\\n": "\n", "\\b": "\b", "\\t": "\t"};
+
 
 class AstBuilder extends RegexVisitor {
 
@@ -46,15 +60,58 @@ class AstBuilder extends RegexVisitor {
     }
 
     visitEscapedReservedAtomicPattern(ctx) {
-        return new AtomicPattern(ctx.getText().substring(1));
+        const char = ctx.getText();
+        const pattern = char in ESPECIAL_ESCAPE_CHARACTERS ? ESPECIAL_ESCAPE_CHARACTERS[char] : char.substring(1); 
+        return new AtomicPattern(pattern);
     }
 
     visitCharacterClass(ctx) {
-        return new CharacterClass(ctx.getText());
+        const txt = ctx.getText();
+        return SHORTHAND_CHARACTER_CLASSES[txt];
     }
 
+      
+    visitComplexCharacterClass(ctx) {
+        const negated = Boolean(ctx.negated);
+        const children = this.visit(ctx.complexCCPiece());
+        const single = [];
+        const ranges = [];
+        for (const c of children) {
+           single.push(...c.singles);
+           ranges.push(...c.ranges);
+        }
+        return new ComplexClass(single, ranges, ctx.getText(), negated);
+    }
+    
+
+    /**
+     * This is a single piece, so it's either a single or a range
+     * @param {} ctx 
+     * @returns 
+     */
+    visitCcPiece_Respone(ctx) {
+        const piece = this.visit(ctx.allowedCharInCharacterClass());
+        const base =  {singles: [], ranges: []};
+        if (piece.length === 1)
+            base.singles.push(piece[0]);
+        else 
+            base.ranges.push(new ComplexClassRange(piece[0], piece[1]));
+        return base;   
+    }
+
+  /**
+     * This is shorthand like \w. It can include multiple ranges and singles
+     * @returns 
+     */
+    visitCcPiece_Escape(ctx) {
+        const txt = ctx.getText();
+        const base = {singles: [], ranges: []};
+        base.ranges.push(SHORTHAND_CHARACTER_CLASSES[txt]);
+        return base;
+    }
+  
     visitDotPattern() {
-        return new DotPattern();
+        return new ComplexClass(["\n", "\r"], [], true, ".");
     }
 
     visitDollarAnchor() {
@@ -64,25 +121,9 @@ class AstBuilder extends RegexVisitor {
     visitCaretAnchor() {
         return new CaretAnchor();
     }
-    
-    visitComplexCharacterClass(ctx) {
-        const negated = Boolean(ctx.negated);
-        const children = this.visit(ctx.complexCCPiece());
-        const single = [];
-        const ranges = [];
-        for (const c of children) {
-            if (c.length === 1) single.push(c[0]);
-            else ranges.push(c);
-        }
-        return new ComplexClass(single, ranges, ctx.getText(), negated);
-    }
-    
+  
     visitComplexClass(ctx) {
        return this.visit(ctx.complexCharacterClass());
-    }
-
-    visitComplexCCPiece(ctx) {
-        return this.visit(ctx.allowedCharInCharacterClass());
     }
 
     visitAllowedCharInCharacterClass(ctx) {

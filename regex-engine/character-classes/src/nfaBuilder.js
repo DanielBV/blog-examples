@@ -1,7 +1,7 @@
-const {RegexAlternative, Regex,  AtomicPattern} = require('../../grammar/ast');
+const {RegexAlternative, Regex,  AtomicPattern, ComplexClass} = require('../../grammar/ast');
 const {EPSILON} = require('../../grammar/astBuilder');
 const {ASTERISK, LAZY_ASTERISK, PLUS, LAZY_PLUS, OPTIONAL, LAZY_OPTIONAL} = require('../../grammar/astBuilder');
-const {CharacterMatcher, EngineNFA, EpsilonMatcher} = require('./nfa');
+const {CharacterMatcher, EngineNFA, EpsilonMatcher, CustomMatcher} = require('./nfa');
 
 const EPSILON_MATCHER = new EpsilonMatcher();
 
@@ -59,8 +59,10 @@ class NFABuilder {
             } else if (c.child instanceof RegexAlternative || c.child instanceof Regex) { // Groups
                 baseIsCapturing = c.child.isCapturingGroup();
                 baseBuilder = () => this._regexToNFA(c.child);
-            } 
-            
+            } else if (c.child instanceof ComplexClass) {
+                baseBuilder = () => this._oneStepNFA(new CustomMatcher((char) => c.child.matches(char), c.child.name));
+            }
+    
             //Second: We apply the quantifier (if there is one)
             if (c.quantifier === ASTERISK || c.quantifier === LAZY_ASTERISK) {
                 current = this._asterisk(() => baseBuilder(), c.quantifier === LAZY_ASTERISK);

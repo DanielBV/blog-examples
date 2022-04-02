@@ -1,4 +1,4 @@
-// Generated from ./common/grammar/regex.g4 by ANTLR 4.8
+// Generated from ./grammar/regex.g4 by ANTLR 4.8
 // jshint ignore: start
 var antlr4 = require('antlr4/index');
 
@@ -60,7 +60,7 @@ regexVisitor.prototype.visitCharacterClass = function(ctx) {
 };
 
 
-// Visit a parse tree produced by regexParser#complexClass.
+// Visit a parse tree produced by regexParser#ComplexClass.
 regexVisitor.prototype.visitComplexClass = function(ctx) {
   return this.visitChildren(ctx);
 };
@@ -96,8 +96,14 @@ regexVisitor.prototype.visitComplexCharacterClass = function(ctx) {
 };
 
 
-// Visit a parse tree produced by regexParser#complexCCPiece.
-regexVisitor.prototype.visitComplexCCPiece = function(ctx) {
+// Visit a parse tree produced by regexParser#ccPiece_Respone.
+regexVisitor.prototype.visitCcPiece_Respone = function(ctx) {
+  return this.visitChildren(ctx);
+};
+
+
+// Visit a parse tree produced by regexParser#ccPiece_Escape.
+regexVisitor.prototype.visitCcPiece_Escape = function(ctx) {
   return this.visitChildren(ctx);
 };
 

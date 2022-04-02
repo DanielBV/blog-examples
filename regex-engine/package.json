@@ -6,7 +6,7 @@
     "scripts": {
         "test": "jest",
         "testCapturing": "jest ./capturing-groups",
-        "grammar": "antlr4 ./common/grammar/regex.g4 -o ./common/grammar/generated -Dlanguage=JavaScript -visitor -no-listener"
+        "grammar": "antlr4 ./grammar/regex.g4 -o ./grammar/generated -Dlanguage=JavaScript -visitor -no-listener"
     },
     "author": "",
     "license": "ISC",

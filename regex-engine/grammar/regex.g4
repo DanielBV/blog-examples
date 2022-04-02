@@ -13,7 +13,7 @@ subexpr:
     | atomicChar #atomicPattern
     | ESCAPED_RESERVED_CHAR #escapedReservedAtomicPattern
     | CHARACTER_CLASS #characterClass
-    | complexCharacterClass #complexClass
+    | complexCharacterClass #ComplexClass
     | DOLLAR #dollarAnchor
     | CARET #caretAnchor
     | DOT #dotPattern;
@@ -21,7 +21,8 @@ subexpr:
 regexGroup: OPEN_PAR (QUESTION_MARK ((LOWER_THAN name+=CHAR+ GREATER_THAN) | nonCapture=COLON))? regex CLOSE_PAR;
 complexCharacterClass: OPEN_BRACKET negated=CARET? complexCCPiece* CLOSE_BRACKET;
 
-complexCCPiece: allowedCharInCharacterClass (DASH allowedCharInCharacterClass)?;
+complexCCPiece: allowedCharInCharacterClass (DASH allowedCharInCharacterClass)? #ccPiece_Respone
+    | CHARACTER_CLASS #ccPiece_Escape;
 
 allowedCharInCharacterClass:
     CHAR | DASH | OPEN_BRACKET | OPEN_PAR | CLOSE_PAR | ASTERISK | PLUS | DOT | QUESTION_MARK | ESCAPED_RESERVED_CHAR | GREATER_THAN 
@@ -41,7 +42,7 @@ quantifier:
 
 BACKSLASH : '\\';
 ESCAPED_RESERVED_CHAR: BACKSLASH (BACKSLASH | OPEN_PAR | CLOSE_PAR | ASTERISK | PLUS | DOT | OPEN_BRACKET | CLOSE_BRACKET | GREATER_THAN 
-    | LOWER_THAN | COLON | CARET | DOLLAR);
+    | LOWER_THAN | COLON | CARET | DOLLAR | 'n' | 't' | 'b' | 'r');
 CHARACTER_CLASS: BACKSLASH ( 'd' | 'D' | 'w' | 'W' | 's' | 'S');
 OPEN_PAR: '(';
 CLOSE_PAR: ')';

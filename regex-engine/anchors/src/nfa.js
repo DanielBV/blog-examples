@@ -139,7 +139,7 @@ class StartOfLineMatcher extends Matcher {
     }
 
     get label() {
-        return "$";
+        return "^";
     }
 }
 

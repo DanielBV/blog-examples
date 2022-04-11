@@ -122,7 +122,7 @@ class StartOfStringMatcher extends Matcher {
     }
 
     get label() {
-        return "$";
+        return "^";
     }
 }
 

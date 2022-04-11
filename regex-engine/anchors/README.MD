@@ -6,9 +6,11 @@ Contains the code of the four first posts about regular expressions. The result 
 * [Building a NFA from a regex](https://www.abstractsyntaxseed.com/blog/regex-engine/regex-to-nfa) (https://www.abstractsyntaxseed.com/blog/regex-engine/regex-to-nfa)
 * [Adding Capturing groups](https://www.abstractsyntaxseed.com/blog/regex-engine/capturing-groups) (https://www.abstractsyntaxseed.com/blog/regex-engine/capturing-groups)
 * [Character classes and escape characters](https://www.abstractsyntaxseed.com/blog/regex-engine/character-classes) (https://www.abstractsyntaxseed.com/blog/regex-engine/capturing-groups)
+* [Anchors and multiline mode](https://www.abstractsyntaxseed.com/blog/regex-engine/anchors) (https://www.abstractsyntaxseed.com/blog/regex-engine/anchors)
 
+**The main difference from the character classes** is that this one implements both the start and end of string anchors (`^` and `$`) and the 
+multiline mode.
 
-**The main difference from the capturing groups** is that it allows character classes and escape characters.
 ## File structure
 * `src`
     * `nfa.js`: Contains the defined in the second post: `State`, `Matcher`, `EpsilonMatcher`, `CharacterMatcher`, `EngineNFA`
@@ -68,3 +70,12 @@ Quantifiers are greedy by default, so they'll match as much input as they can. T
 * Capturing groups: `(ab)`
 * Non-capturing groups: `(?:ab)`
 * Named-capturing groups: `(?<name>ab)`
+
+## Anchors
+Anchors are a bit weird because they don't match characters. Instead they match positions:
+* `^`: Matches the beginning of the string
+* `$`: Matches the end of the string
+
+This engine also allows multiline mode. To run it do: `new Regex(yourRegex, {multiline: true})`. In this mode the behaviour changes:
+* `^`: Matches the beginning of the string and *after* every line break
+* `$`: Matches the end of the string and *before* every line break

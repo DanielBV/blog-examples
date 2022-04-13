@@ -1,14 +1,16 @@
-# Regex engine with character classes
+# Regex engine with multiple clases
 
-Contains the code of the five first posts about regular expression engines.
+Contains the code of the four seven posts about regular expression engines.
 * [Introduction](https://www.abstractsyntaxseed.com/blog/regex-engine/introduction) (https://www.abstractsyntaxseed.com/blog/regex-engine/introduction)
 * [Implementing a NFA](https://www.abstractsyntaxseed.com/blog/regex-engine/implementing-a-nfa) (https://www.abstractsyntaxseed.com/blog/regex-engine/implementing-a-nfa)
 * [Building a NFA from a regex](https://www.abstractsyntaxseed.com/blog/regex-engine/regex-to-nfa) (https://www.abstractsyntaxseed.com/blog/regex-engine/regex-to-nfa)
 * [Adding Capturing groups](https://www.abstractsyntaxseed.com/blog/regex-engine/capturing-groups) (https://www.abstractsyntaxseed.com/blog/regex-engine/capturing-groups)
 * [Character classes and escape characters](https://www.abstractsyntaxseed.com/blog/regex-engine/character-classes) (https://www.abstractsyntaxseed.com/blog/regex-engine/capturing-groups)
+* [Anchors and multiline mode](https://www.abstractsyntaxseed.com/blog/regex-engine/anchors) (https://www.abstractsyntaxseed.com/blog/regex-engine/anchors)
+* [Finding multiple matches](https://www.abstractsyntaxseed.com/blog/regex-engine/multiple-matches) (https://www.abstractsyntaxseed.com/blog/regex-engine/multiple-matches)
 
+**The main difference from the anchors** is that here the regex have `find` and `findAll` methods to get a single or all the matches. 
 
-**The main difference from the capturing groups** is that it allows character classes and escape characters.
 ## File structure
 * `src`
     * `nfa.js`: Contains the defined in the second post: `State`, `Matcher`, `EpsilonMatcher`, `CharacterMatcher`, `EngineNFA`
@@ -27,7 +29,11 @@ npm run test
 ``` 
 
 ## Allowed syntax
-Currently, `regex.compute(string)` returns an object with a `group` attribute if it matches the string or `null` otherwise. `group` is a object, 
+You can call:
+* `regex.find(string)` to get a single match. If you call this method multiple times it'll return the next match.
+* `regex.findAll(string)` returns an array of matches.
+
+A match is just an object with a `group` attribute if it matches the string or `null` otherwise. `group` is a object, 
 the keys are the name of the group and the value is the substring they matched.
 
 ### Character classes
@@ -68,3 +74,12 @@ Quantifiers are greedy by default, so they'll match as much input as they can. T
 * Capturing groups: `(ab)`
 * Non-capturing groups: `(?:ab)`
 * Named-capturing groups: `(?<name>ab)`
+
+## Anchors
+Anchors are a bit weird because they don't match characters. Instead they match positions:
+* `^`: Matches the beginning of the string
+* `$`: Matches the end of the string
+
+This engine also allows multiline mode. To run it do: `new Regex(yourRegex, {multiline: true})`. In this mode the behaviour changes:
+* `^`: Matches the beginning of the string and *after* every line break
+* `$`: Matches the end of the string and *before* every line break

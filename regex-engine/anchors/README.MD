@@ -1,6 +1,6 @@
-# Formal regex engine
+# Regex engine with anchors
 
-Contains the code of the four first posts about regular expressions. The result is a engine for formal regular expressions.
+Contains the code of the six first posts about regular expression engines.
 * [Introduction](https://www.abstractsyntaxseed.com/blog/regex-engine/introduction) (https://www.abstractsyntaxseed.com/blog/regex-engine/introduction)
 * [Implementing a NFA](https://www.abstractsyntaxseed.com/blog/regex-engine/implementing-a-nfa) (https://www.abstractsyntaxseed.com/blog/regex-engine/implementing-a-nfa)
 * [Building a NFA from a regex](https://www.abstractsyntaxseed.com/blog/regex-engine/regex-to-nfa) (https://www.abstractsyntaxseed.com/blog/regex-engine/regex-to-nfa)

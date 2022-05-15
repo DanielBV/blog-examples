@@ -159,6 +159,7 @@ class AstBuilder extends RegexVisitor {
         const alternative = this.visit(ctx.regex());
         alternative.groupName = ctx.name.map(x => x.text).join("");
         if (ctx.nonCapture) alternative.nonCapturing();
+        if (ctx.atomic) alternative.atomic();
         return alternative;
     }
 

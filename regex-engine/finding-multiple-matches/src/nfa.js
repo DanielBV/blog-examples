@@ -236,7 +236,7 @@ class EngineNFA {
     
         while (stack.length) {
             const {currentState, i, memory} = stack.pop();
-            this.computeGroups(currentState, memory, i); // <-- This is new
+            this.computeGroups(currentState, memory, i); 
 
             if (this.endingStates.includes(currentState.name)) 
                 return memory;

@@ -38,13 +38,12 @@ class NFABuilder {
         let nfa = null;
         // A regex is just a series of subpatterns. We iterate through them and concatenate them to 'nfa'
         for (const c of regexAST.subpatterns) {
-            let baseBuilder, current, baseIsCapturing, namedGroup = null;
+            let baseBuilder, current;
     
             // First we translate the base of the regex (ignoring the quantifier)
             if (c.child instanceof AtomicPattern) {
                 baseBuilder = () => this._atomicPatternNFA(c.child.char);
             } else if (c.child instanceof RegexAlternative || c.child instanceof Regex) { // Groups
-                baseIsCapturing = c.child.isCapturingGroup();
                 baseBuilder = () => this._regexToNFA(c.child);
             }
     

@@ -1,6 +1,6 @@
-# Regex engine with multiple matches
+# Regex engine with atomic groups
 
-Contains the code of the four seven posts about regular expression engines.
+Contains the code of the eight posts about regular expression engines.
 * [Introduction](https://www.abstractsyntaxseed.com/blog/regex-engine/introduction) (https://www.abstractsyntaxseed.com/blog/regex-engine/introduction)
 * [Implementing a NFA](https://www.abstractsyntaxseed.com/blog/regex-engine/implementing-a-nfa) (https://www.abstractsyntaxseed.com/blog/regex-engine/implementing-a-nfa)
 * [Building a NFA from a regex](https://www.abstractsyntaxseed.com/blog/regex-engine/regex-to-nfa) (https://www.abstractsyntaxseed.com/blog/regex-engine/regex-to-nfa)
@@ -8,8 +8,8 @@ Contains the code of the four seven posts about regular expression engines.
 * [Character classes and escape characters](https://www.abstractsyntaxseed.com/blog/regex-engine/character-classes) (https://www.abstractsyntaxseed.com/blog/regex-engine/capturing-groups)
 * [Anchors and multiline mode](https://www.abstractsyntaxseed.com/blog/regex-engine/anchors) (https://www.abstractsyntaxseed.com/blog/regex-engine/anchors)
 * [Finding multiple matches](https://www.abstractsyntaxseed.com/blog/regex-engine/multiple-matches) (https://www.abstractsyntaxseed.com/blog/regex-engine/multiple-matches)
-
-**The main difference from the anchors** is that here the regex have `find` and `findAll` methods to get a single or all the matches. 
+* [Finding multiple matches](https://www.abstractsyntaxseed.com/blog/regex-engine/multiple-matches) (https://www.abstractsyntaxseed.com/blog/regex-engine/multiple-matches)
+* [Atomic groups](https://www.abstractsyntaxseed.com/blog/regex-engine/atomic-groups) (https://www.abstractsyntaxseed.com/blog/regex-engine/atomic-groups)
 
 ## File structure
 * `src`
@@ -83,3 +83,7 @@ Anchors are a bit weird because they don't match characters. Instead they match 
 This engine also allows multiline mode. To run it do: `new Regex(yourRegex, {multiline: true})`. In this mode the behaviour changes:
 * `^`: Matches the beginning of the string and *after* every line break
 * `$`: Matches the end of the string and *before* every line break
+
+## Atomic groups
+Atomic groups are non-capturing groups that, after the engine exits them, it deletes the backtracking stack. Meaning that the engine can't backtrack the decision.
+The syntax is `(?>bc|b)`

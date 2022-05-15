@@ -4,6 +4,7 @@ class State {
         this.transitions = [];
         this.startsGroups = [];
         this.endsGroups = [];
+        this.nukesStack = false;
     }
 
     addTransition(toState, matcher) {
@@ -228,9 +229,9 @@ class EngineNFA {
         }
     }
     
-    compute(string) {
-        const stack = [];
-        stack.push({i: 0, currentState: this.states[this.initialState], memory: {GROUP_MATCHES:{}, EPSILON_VISITED: []}})
+    compute(string, i) {
+        let stack = [];
+        stack.push({i, currentState: this.states[this.initialState], memory: {GROUP_MATCHES:{}, EPSILON_VISITED: []}})
     
         while (stack.length) {
             const {currentState, i, memory} = stack.pop();
@@ -238,8 +239,8 @@ class EngineNFA {
 
             if (this.endingStates.includes(currentState.name)) 
                 return memory;
-            
-            const input = string[i];
+            if (currentState.nukesStack)
+                stack = [];            
             
             // Transitions are pushed in reverse order because we want the first transition to be in the last position of the stack
             for (let c = currentState.transitions.length-1; c >= 0; c--) {
@@ -273,6 +274,10 @@ class EngineNFA {
     addGroup(start, end, group) {
         this.states[start].addStartGroup(group);
         this.states[end].addEndGroup(group);
+    }
+
+    setNukeState(state) {
+        this.states[state].nukesStack = true;
     }
 }
 

@@ -1,14 +1,16 @@
-const {RegexAlternative, Regex,  AtomicPattern, ComplexClass} = require('../../grammar/ast');
+const {RegexAlternative, Regex,  AtomicPattern, ComplexClass, CaretAnchor, DollarAnchor} = require('../../grammar/ast');
 const {EPSILON} = require('../../grammar/astBuilder');
 const {ASTERISK, LAZY_ASTERISK, PLUS, LAZY_PLUS, OPTIONAL, LAZY_OPTIONAL} = require('../../grammar/astBuilder');
-const {CharacterMatcher, EngineNFA, EpsilonMatcher, CustomMatcher} = require('./nfa');
+const {CharacterMatcher, EngineNFA, EpsilonMatcher, CustomMatcher, StartOfStringMatcher, EndOfStringMatcher, 
+    EndOfLineMatcher, StartOfLineMatcher} = require('./nfa');
 
 const EPSILON_MATCHER = new EpsilonMatcher();
 
 class NFABuilder {
-    constructor() {
+    constructor(modes) {
         this.stateNumber = 0;
         this.groupNumber = 0;
+        this.modes = modes || {};
     }
 
     newState() {
@@ -52,7 +54,7 @@ class NFABuilder {
         const groupName = regexAST.isCapturingGroup() ? regexAST.groupName || this.newGroup() : null;
         for (const c of regexAST.subpatterns) {
             let baseBuilder, current;
-
+    
             // First we translate the base of the regex (ignoring the quantifier)
             if (c.child instanceof AtomicPattern) {
                 baseBuilder = () => this._atomicPatternNFA(c.child.char);
@@ -60,7 +62,10 @@ class NFABuilder {
                 baseBuilder = () => this._regexToNFA(c.child);
             } else if (c.child instanceof ComplexClass) {
                 baseBuilder = () => this._oneStepNFA(new CustomMatcher((char) => c.child.matches(char), c.child.name));
-            }
+            } else if (c.child instanceof DollarAnchor)
+                baseBuilder = () => this._oneStepNFA(this.modes.multiline ? new EndOfLineMatcher() : new EndOfStringMatcher());
+            else if (c.child instanceof CaretAnchor)
+                baseBuilder = () => this._oneStepNFA(this.modes.multiline ? new StartOfLineMatcher() : new StartOfStringMatcher());
     
             //Second: We apply the quantifier (if there is one)
             if (c.quantifier === ASTERISK || c.quantifier === LAZY_ASTERISK) {
@@ -85,6 +90,7 @@ class NFABuilder {
                 nfa.appendNFA(current, nfa.endingStates[0]);
         }
         if (groupName !== null) nfa.addGroup(nfa.initialState, nfa.endingStates[0], groupName); 
+        if (regexAST.isAtomic()) nfa.setNukeState(nfa.endingStates[0]);
         return nfa;
     }
 
@@ -157,6 +163,7 @@ class NFABuilder {
         endingStates.forEach(x => nfa.addTransition(x, end, new EpsilonMatcher()));
         nfa.setEndingStates([end]);
         if (groupName !== null) nfa.addGroup(start, end, groupName);
+        if (alternativeAst.isAtomic()) nfa.setNukeState(nfa.endingStates[0]);
         return nfa;
     }
 }

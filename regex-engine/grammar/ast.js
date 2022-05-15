@@ -7,13 +7,24 @@ class Regex {
         this.subpatterns = subpatterns;
         this.groupName = null;
         this._capturing = true;
-    }
+        this._atomic = false;
+       }
 
     isCapturingGroup() {
         return this._capturing;
     }
 
     nonCapturing() {
+        this._capturing = false;
+        return this;
+    }
+
+    isAtomic() {
+        return this._atomic;
+    }
+
+    atomic() {
+        this._atomic = true;
         this._capturing = false;
         return this;
     }
@@ -37,6 +48,7 @@ class RegexAlternative {
         this.groupName = null;
         this._capturing = true;
         this.alternatives = alternatives;
+        this._atomic = false;
     }
 
     isCapturingGroup() {
@@ -44,6 +56,16 @@ class RegexAlternative {
     }
 
     nonCapturing() {
+        this._capturing = false;
+        return this;
+    }
+
+    isAtomic() {
+        return this._atomic;
+    }
+    
+    atomic() {
+        this._atomic = true;
         this._capturing = false;
         return this;
     }

@@ -18,7 +18,7 @@ subexpr:
     | CARET #caretAnchor
     | DOT #dotPattern;
 
-regexGroup: OPEN_PAR (QUESTION_MARK ((LOWER_THAN name+=CHAR+ GREATER_THAN) | nonCapture=COLON))? regex CLOSE_PAR;
+regexGroup: OPEN_PAR (QUESTION_MARK ((LOWER_THAN name+=CHAR+ GREATER_THAN) | nonCapture=COLON | atomic=GREATER_THAN))? regex CLOSE_PAR;
 complexCharacterClass: OPEN_BRACKET negated=CARET? complexCCPiece* CLOSE_BRACKET;
 
 complexCCPiece: allowedCharInCharacterClass (DASH allowedCharInCharacterClass)? #ccPiece_Respone

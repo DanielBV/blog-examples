@@ -66,6 +66,12 @@ regexVisitor.prototype.visitComplexClass = function(ctx) {
 };
 
 
+// Visit a parse tree produced by regexParser#backreference.
+regexVisitor.prototype.visitBackreference = function(ctx) {
+  return this.visitChildren(ctx);
+};
+
+
 // Visit a parse tree produced by regexParser#dollarAnchor.
 regexVisitor.prototype.visitDollarAnchor = function(ctx) {
   return this.visitChildren(ctx);

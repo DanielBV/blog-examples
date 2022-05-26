@@ -48,6 +48,10 @@ class NFABuilder {
 
     _singleRegexToNFA(regexAST) {
         let nfa = null;
+        if (regexAST.subpatterns.length === 0) {
+            // Handles empty capturing groups
+            nfa = this._oneStepNFA(new EpsilonMatcher());
+        }
         // A regex is just a series of subpatterns. We iterate through them and concatenate them to 'nfa'
         const groupName = regexAST.isCapturingGroup() ? regexAST.groupName || this.newGroup() : null;
         for (const c of regexAST.subpatterns) {

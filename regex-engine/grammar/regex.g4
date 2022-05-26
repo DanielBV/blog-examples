@@ -14,6 +14,7 @@ subexpr:
     | ESCAPED_RESERVED_CHAR #escapedReservedAtomicPattern
     | CHARACTER_CLASS #characterClass
     | complexCharacterClass #ComplexClass
+    | BACKREFERENCE #backreference
     | DOLLAR #dollarAnchor
     | CARET #caretAnchor
     | DOT #dotPattern;
@@ -43,6 +44,7 @@ quantifier:
 BACKSLASH : '\\';
 ESCAPED_RESERVED_CHAR: BACKSLASH (BACKSLASH | OPEN_PAR | CLOSE_PAR | ASTERISK | PLUS | DOT | OPEN_BRACKET | CLOSE_BRACKET | GREATER_THAN 
     | LOWER_THAN | COLON | CARET | DOLLAR | 'n' | 't' | 'b' | 'r');
+BACKREFERENCE: BACKSLASH [0-9]+;
 CHARACTER_CLASS: BACKSLASH ( 'd' | 'D' | 'w' | 'W' | 's' | 'S');
 OPEN_PAR: '(';
 CLOSE_PAR: ')';

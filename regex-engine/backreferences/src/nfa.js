@@ -4,8 +4,7 @@ class State {
         this.transitions = [];
         this.startsGroups = [];
         this.endsGroups = [];
-        this.startsGroups = [];
-        this.endsGroups = [];
+        this.nukesStack = false;
     }
 
     addTransition(toState, matcher) {
@@ -25,16 +24,15 @@ class State {
     }
 }
 
+/**
+ * Represents a transition condition in the regex NFA
+ */
 class Matcher {
     /**
-     * Returns true if 'char' can be consumed by the matcher
+     * Returns an object thats either {matches: false} or {matches:true, consumes:int}
      */
-    matches(string, pos) {
-        return false;
-    }
-
-    isEpsilon() {
-        return null;
+    matches(string, pos, memory) {
+        return {matches: false};
     }
 
     get label() {
@@ -49,11 +47,7 @@ class CharacterMatcher extends Matcher{
     }
 
     matches(string, pos) {
-        return this.c === string[pos];
-    }
-
-    isEpsilon() {
-        return false;
+        return {matches: this.c === string[pos], consumes:1}
     }
 
     get label() {
@@ -63,11 +57,8 @@ class CharacterMatcher extends Matcher{
 
 class EpsilonMatcher extends Matcher {
     matches() {
-        return true;
-    }
+        return {matches: true, consumes:0};
 
-    isEpsilon() {
-        return true;
     }
 
     get label() {
@@ -77,14 +68,8 @@ class EpsilonMatcher extends Matcher {
 
 class EndOfStringMatcher extends Matcher {
 
-    isEpsilon() {
-        // This is a pseudo-epsilon transition, since it doesn't consume any input 
-        // (even though the matcher can't transverse it freely)
-        return true; 
-    }
-
     matches(string, pos) {
-        return string[pos] === undefined;
+        return {matches: string[pos] === undefined, consumes:0};
     }
 
     get label() {
@@ -94,14 +79,8 @@ class EndOfStringMatcher extends Matcher {
 
 class EndOfLineMatcher extends Matcher {
 
-    isEpsilon() {
-        // This is a pseudo-epsilon transition, since it doesn't consume any input 
-        // (even though the matcher can't transverse it freely)
-        return true; 
-    }
-
     matches(string, pos) {
-        return string[pos] === undefined || string[pos] === "\n";
+        return {matches: string[pos] === undefined || string[pos] === "\n", consumes: 0};
     }
 
     get label() {
@@ -110,15 +89,9 @@ class EndOfLineMatcher extends Matcher {
 }
 
 class StartOfStringMatcher extends Matcher {
-
-    isEpsilon() {
-        // This is a pseudo-epsilon transition, since it doesn't consume any input 
-        // (even though the matcher can't transverse it freely)
-        return true; 
-    }
     
     matches(string, i) {
-        return i == 0;
+        return {matches:i == 0, consumes: 0};
     }
 
     get label() {
@@ -127,15 +100,9 @@ class StartOfStringMatcher extends Matcher {
 }
 
 class StartOfLineMatcher extends Matcher {
-
-    isEpsilon() {
-        // This is a pseudo-epsilon transition, since it doesn't consume any input 
-        // (even though the matcher can't transverse it freely)
-        return true; 
-    }
     
     matches(string, i) {
-        return i == 0 || string[i-1] === "\n";
+        return {matches: i == 0 || string[i-1] === "\n", consumes: 0};
     }
 
     get label() {
@@ -154,18 +121,38 @@ class CustomMatcher extends Matcher {
         const c = string[pos];
         // The engine tries to match with c = undefined when it has run out of input. We have to ensure that in that case it doesn't match, or it could get stuck 
         // in an infinite loop
-        if (c === undefined) return false;
-        return this._matcher(c);
-    }
-
-    isEpsilon() {
-        return false;
+        if (c === undefined) return {matches: false};
+        return {matches: this._matcher(c), consumes: 1};
     }
 
     get label() {
         return this._label;
     }
 }
+
+class BackreferenceMatcher extends Matcher {
+    constructor(groupNumber) {
+        super();
+        this.g = groupNumber;
+    }
+
+    matches(string, i, memory) {
+        const group = memory.PREVIOUS_GROUP_MATCHES[this.g];
+        if (!group)
+            return {matches: false};
+        const [_, start, end] = group;
+        if (!end)
+            return {matches: false};
+        if (string.substring(start,end) === string.substring(i, i + end-start))
+            return {matches: true, consumes: end - start};
+        return {matches: false};
+    }
+
+    get label() {
+        return `\\${this.g}`
+    }
+}
+
 
 class EngineNFA {
     constructor() {
@@ -231,8 +218,8 @@ class EngineNFA {
     }
     
     compute(string, i) {
-        const stack = [];
-        stack.push({i, currentState: this.states[this.initialState], memory: {GROUP_MATCHES:{}, EPSILON_VISITED: []}})
+        let stack = [];
+        stack.push({i, currentState: this.states[this.initialState], memory: {GROUP_MATCHES:{}, EPSILON_VISITED: [], PREVIOUS_GROUP_MATCHES: []}})
     
         while (stack.length) {
             const {currentState, i, memory} = stack.pop();
@@ -240,22 +227,24 @@ class EngineNFA {
 
             if (this.endingStates.includes(currentState.name)) 
                 return memory;
-            
-            const input = string[i];
+            if (currentState.nukesStack)
+                stack = [];            
             
             // Transitions are pushed in reverse order because we want the first transition to be in the last position of the stack
             for (let c = currentState.transitions.length-1; c >= 0; c--) {
                 const [matcher, toState] = currentState.transitions[c];
-                if (matcher.matches(string, i)) { 
+                const match = matcher.matches(string, i, memory);
+                if (match.matches) { 
                     const copyMemory = JSON.parse(JSON.stringify(memory));
-                    if (matcher.isEpsilon()) {
+                    const epsilonLoopPossible = matcher.consumes === 0;
+                    if (epsilonLoopPossible) {
                         // Don't follow the transition. We already have been in that state
                         if (memory.EPSILON_VISITED.includes(toState.name))
                             continue;
                         copyMemory.EPSILON_VISITED.push(currentState.name);
                     } else 
                         copyMemory.EPSILON_VISITED = [];
-                    const nextI = matcher.isEpsilon() ? i : i+1;
+                    const nextI = i + match.consumes;
                     stack.push({i: nextI, currentState: toState, memory: copyMemory});
                 }
             }
@@ -269,6 +258,7 @@ class EngineNFA {
         }
         for (const group of currentState.endsGroups) {
             memory.GROUP_MATCHES[group][2] = i;
+            memory.PREVIOUS_GROUP_MATCHES[group] = memory.GROUP_MATCHES[group];
         }
     }
   
@@ -276,7 +266,11 @@ class EngineNFA {
         this.states[start].addStartGroup(group);
         this.states[end].addEndGroup(group);
     }
+
+    setNukeState(state) {
+        this.states[state].nukesStack = true;
+    }
 }
 
 Object.assign(exports, {State, Matcher, EngineNFA, CharacterMatcher, EpsilonMatcher,StartOfStringMatcher, EndOfStringMatcher, 
-    StartOfLineMatcher, EndOfLineMatcher,CustomMatcher});
+    StartOfLineMatcher, EndOfLineMatcher,CustomMatcher, BackreferenceMatcher});

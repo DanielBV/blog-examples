@@ -115,4 +115,10 @@ class CaretAnchor {
     
 }
 
-Object.assign(exports, {Regex, Expression, RegexAlternative, AtomicPattern, DotPattern, ComplexClass, DollarAnchor, CaretAnchor, ComplexClassRange});
+class Backreference {
+    constructor(group) {
+        this.group = group;
+    }
+}
+
+Object.assign(exports, {Regex, Expression, RegexAlternative, AtomicPattern, DotPattern, ComplexClass, DollarAnchor, CaretAnchor, ComplexClassRange, Backreference});

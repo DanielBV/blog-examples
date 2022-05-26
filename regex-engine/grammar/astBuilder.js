@@ -1,5 +1,6 @@
 const {regexVisitor: RegexVisitor} = require('./generated/regexVisitor');
-const {Regex, Expression, AtomicPattern, RegexAlternative, DotPattern, ComplexClass, DollarAnchor, CaretAnchor, ComplexClassRange} = require('./ast');
+const {Regex, Expression, AtomicPattern, RegexAlternative, DotPattern, ComplexClass, 
+    DollarAnchor, CaretAnchor, ComplexClassRange, Backreference} = require('./ast');
 const EPSILON = Symbol("epsilon");
 const ASTERISK = Symbol("*");
 const PLUS = Symbol("+");
@@ -124,6 +125,11 @@ class AstBuilder extends RegexVisitor {
   
     visitComplexClass(ctx) {
        return this.visit(ctx.complexCharacterClass());
+    }
+
+    visitBackreference(ctx) {
+        const [_, group] = /\\([0-9]+)/.exec(ctx.getText());
+        return new Backreference(Number(group));
     }
 
     visitAllowedCharInCharacterClass(ctx) {

@@ -7,7 +7,7 @@ var grammarFileName = "regex.g4";
 
 
 var serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964",
-    "\u0003\u0015r\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004\u0004\t",
+    "\u0003\u0016s\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004\u0004\t",
     "\u0004\u0004\u0005\t\u0005\u0004\u0006\t\u0006\u0004\u0007\t\u0007\u0004",
     "\b\t\b\u0004\t\t\t\u0004\n\t\n\u0004\u000b\t\u000b\u0004\f\t\f\u0003",
     "\u0002\u0003\u0002\u0003\u0002\u0003\u0003\u0007\u0003\u001d\n\u0003",
@@ -15,65 +15,66 @@ var serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964",
     "\u0003\u000e\u0003&\u000b\u0003\u0003\u0004\u0003\u0004\u0007\u0004",
     "*\n\u0004\f\u0004\u000e\u0004-\u000b\u0004\u0003\u0005\u0003\u0005\u0005",
     "\u00051\n\u0005\u0003\u0006\u0003\u0006\u0003\u0006\u0003\u0006\u0003",
-    "\u0006\u0003\u0006\u0003\u0006\u0003\u0006\u0005\u0006;\n\u0006\u0003",
-    "\u0007\u0003\u0007\u0003\u0007\u0003\u0007\u0006\u0007A\n\u0007\r\u0007",
-    "\u000e\u0007B\u0003\u0007\u0003\u0007\u0003\u0007\u0005\u0007H\n\u0007",
-    "\u0005\u0007J\n\u0007\u0003\u0007\u0003\u0007\u0003\u0007\u0003\b\u0003",
-    "\b\u0005\bQ\n\b\u0003\b\u0007\bT\n\b\f\b\u000e\bW\u000b\b\u0003\b\u0003",
-    "\b\u0003\t\u0003\t\u0003\t\u0005\t^\n\t\u0003\t\u0005\ta\n\t\u0003\n",
-    "\u0003\n\u0003\u000b\u0003\u000b\u0003\f\u0003\f\u0003\f\u0003\f\u0003",
-    "\f\u0003\f\u0003\f\u0003\f\u0003\f\u0005\fp\n\f\u0003\f\u0002\u0002",
-    "\r\u0002\u0004\u0006\b\n\f\u000e\u0010\u0012\u0014\u0016\u0002\u0004",
-    "\u0005\u0002\u0005\u0005\u0007\r\u000f\u0015\u0004\u0002\u000e\u0012",
-    "\u0015\u0015\u0002~\u0002\u0018\u0003\u0002\u0002\u0002\u0004\u001e",
-    "\u0003\u0002\u0002\u0002\u0006\'\u0003\u0002\u0002\u0002\b.\u0003\u0002",
-    "\u0002\u0002\n:\u0003\u0002\u0002\u0002\f<\u0003\u0002\u0002\u0002\u000e",
-    "N\u0003\u0002\u0002\u0002\u0010`\u0003\u0002\u0002\u0002\u0012b\u0003",
-    "\u0002\u0002\u0002\u0014d\u0003\u0002\u0002\u0002\u0016o\u0003\u0002",
-    "\u0002\u0002\u0018\u0019\u0005\u0004\u0003\u0002\u0019\u001a\u0007\u0002",
-    "\u0002\u0003\u001a\u0003\u0003\u0002\u0002\u0002\u001b\u001d\u0005\b",
-    "\u0005\u0002\u001c\u001b\u0003\u0002\u0002\u0002\u001d \u0003\u0002",
-    "\u0002\u0002\u001e\u001c\u0003\u0002\u0002\u0002\u001e\u001f\u0003\u0002",
-    "\u0002\u0002\u001f$\u0003\u0002\u0002\u0002 \u001e\u0003\u0002\u0002",
-    "\u0002!#\u0005\u0006\u0004\u0002\"!\u0003\u0002\u0002\u0002#&\u0003",
-    "\u0002\u0002\u0002$\"\u0003\u0002\u0002\u0002$%\u0003\u0002\u0002\u0002",
-    "%\u0005\u0003\u0002\u0002\u0002&$\u0003\u0002\u0002\u0002\'+\u0007\u0003",
-    "\u0002\u0002(*\u0005\b\u0005\u0002)(\u0003\u0002\u0002\u0002*-\u0003",
-    "\u0002\u0002\u0002+)\u0003\u0002\u0002\u0002+,\u0003\u0002\u0002\u0002",
-    ",\u0007\u0003\u0002\u0002\u0002-+\u0003\u0002\u0002\u0002.0\u0005\n",
-    "\u0006\u0002/1\u0005\u0016\f\u00020/\u0003\u0002\u0002\u000201\u0003",
-    "\u0002\u0002\u00021\t\u0003\u0002\u0002\u00022;\u0005\f\u0007\u0002",
-    "3;\u0005\u0014\u000b\u00024;\u0007\u0005\u0002\u00025;\u0007\u0006\u0002",
-    "\u00026;\u0005\u000e\b\u00027;\u0007\u0014\u0002\u00028;\u0007\u0013",
-    "\u0002\u00029;\u0007\u000b\u0002\u0002:2\u0003\u0002\u0002\u0002:3\u0003",
-    "\u0002\u0002\u0002:4\u0003\u0002\u0002\u0002:5\u0003\u0002\u0002\u0002",
-    ":6\u0003\u0002\u0002\u0002:7\u0003\u0002\u0002\u0002:8\u0003\u0002\u0002",
-    "\u0002:9\u0003\u0002\u0002\u0002;\u000b\u0003\u0002\u0002\u0002<I\u0007",
-    "\u0007\u0002\u0002=G\u0007\f\u0002\u0002>@\u0007\u0011\u0002\u0002?",
-    "A\u0007\u0015\u0002\u0002@?\u0003\u0002\u0002\u0002AB\u0003\u0002\u0002",
-    "\u0002B@\u0003\u0002\u0002\u0002BC\u0003\u0002\u0002\u0002CD\u0003\u0002",
-    "\u0002\u0002DH\u0007\u0010\u0002\u0002EH\u0007\u0012\u0002\u0002FH\u0007",
-    "\u0010\u0002\u0002G>\u0003\u0002\u0002\u0002GE\u0003\u0002\u0002\u0002",
-    "GF\u0003\u0002\u0002\u0002HJ\u0003\u0002\u0002\u0002I=\u0003\u0002\u0002",
-    "\u0002IJ\u0003\u0002\u0002\u0002JK\u0003\u0002\u0002\u0002KL\u0005\u0004",
-    "\u0003\u0002LM\u0007\b\u0002\u0002M\r\u0003\u0002\u0002\u0002NP\u0007",
-    "\r\u0002\u0002OQ\u0007\u0013\u0002\u0002PO\u0003\u0002\u0002\u0002P",
-    "Q\u0003\u0002\u0002\u0002QU\u0003\u0002\u0002\u0002RT\u0005\u0010\t",
-    "\u0002SR\u0003\u0002\u0002\u0002TW\u0003\u0002\u0002\u0002US\u0003\u0002",
-    "\u0002\u0002UV\u0003\u0002\u0002\u0002VX\u0003\u0002\u0002\u0002WU\u0003",
-    "\u0002\u0002\u0002XY\u0007\u000e\u0002\u0002Y\u000f\u0003\u0002\u0002",
-    "\u0002Z]\u0005\u0012\n\u0002[\\\u0007\u000f\u0002\u0002\\^\u0005\u0012",
-    "\n\u0002][\u0003\u0002\u0002\u0002]^\u0003\u0002\u0002\u0002^a\u0003",
-    "\u0002\u0002\u0002_a\u0007\u0006\u0002\u0002`Z\u0003\u0002\u0002\u0002",
-    "`_\u0003\u0002\u0002\u0002a\u0011\u0003\u0002\u0002\u0002bc\t\u0002",
-    "\u0002\u0002c\u0013\u0003\u0002\u0002\u0002de\t\u0003\u0002\u0002e\u0015",
-    "\u0003\u0002\u0002\u0002fp\u0007\t\u0002\u0002gp\u0007\n\u0002\u0002",
-    "hp\u0007\f\u0002\u0002ij\u0007\t\u0002\u0002jp\u0007\f\u0002\u0002k",
-    "l\u0007\n\u0002\u0002lp\u0007\f\u0002\u0002mn\u0007\f\u0002\u0002np",
-    "\u0007\f\u0002\u0002of\u0003\u0002\u0002\u0002og\u0003\u0002\u0002\u0002",
-    "oh\u0003\u0002\u0002\u0002oi\u0003\u0002\u0002\u0002ok\u0003\u0002\u0002",
-    "\u0002om\u0003\u0002\u0002\u0002p\u0017\u0003\u0002\u0002\u0002\u000f",
-    "\u001e$+0:BGIPU]`o"].join("");
+    "\u0006\u0003\u0006\u0003\u0006\u0003\u0006\u0003\u0006\u0005\u0006<",
+    "\n\u0006\u0003\u0007\u0003\u0007\u0003\u0007\u0003\u0007\u0006\u0007",
+    "B\n\u0007\r\u0007\u000e\u0007C\u0003\u0007\u0003\u0007\u0003\u0007\u0005",
+    "\u0007I\n\u0007\u0005\u0007K\n\u0007\u0003\u0007\u0003\u0007\u0003\u0007",
+    "\u0003\b\u0003\b\u0005\bR\n\b\u0003\b\u0007\bU\n\b\f\b\u000e\bX\u000b",
+    "\b\u0003\b\u0003\b\u0003\t\u0003\t\u0003\t\u0005\t_\n\t\u0003\t\u0005",
+    "\tb\n\t\u0003\n\u0003\n\u0003\u000b\u0003\u000b\u0003\f\u0003\f\u0003",
+    "\f\u0003\f\u0003\f\u0003\f\u0003\f\u0003\f\u0003\f\u0005\fq\n\f\u0003",
+    "\f\u0002\u0002\r\u0002\u0004\u0006\b\n\f\u000e\u0010\u0012\u0014\u0016",
+    "\u0002\u0004\u0005\u0002\u0005\u0005\b\u000e\u0010\u0016\u0004\u0002",
+    "\u000f\u0013\u0016\u0016\u0002\u0080\u0002\u0018\u0003\u0002\u0002\u0002",
+    "\u0004\u001e\u0003\u0002\u0002\u0002\u0006\'\u0003\u0002\u0002\u0002",
+    "\b.\u0003\u0002\u0002\u0002\n;\u0003\u0002\u0002\u0002\f=\u0003\u0002",
+    "\u0002\u0002\u000eO\u0003\u0002\u0002\u0002\u0010a\u0003\u0002\u0002",
+    "\u0002\u0012c\u0003\u0002\u0002\u0002\u0014e\u0003\u0002\u0002\u0002",
+    "\u0016p\u0003\u0002\u0002\u0002\u0018\u0019\u0005\u0004\u0003\u0002",
+    "\u0019\u001a\u0007\u0002\u0002\u0003\u001a\u0003\u0003\u0002\u0002\u0002",
+    "\u001b\u001d\u0005\b\u0005\u0002\u001c\u001b\u0003\u0002\u0002\u0002",
+    "\u001d \u0003\u0002\u0002\u0002\u001e\u001c\u0003\u0002\u0002\u0002",
+    "\u001e\u001f\u0003\u0002\u0002\u0002\u001f$\u0003\u0002\u0002\u0002",
+    " \u001e\u0003\u0002\u0002\u0002!#\u0005\u0006\u0004\u0002\"!\u0003\u0002",
+    "\u0002\u0002#&\u0003\u0002\u0002\u0002$\"\u0003\u0002\u0002\u0002$%",
+    "\u0003\u0002\u0002\u0002%\u0005\u0003\u0002\u0002\u0002&$\u0003\u0002",
+    "\u0002\u0002\'+\u0007\u0003\u0002\u0002(*\u0005\b\u0005\u0002)(\u0003",
+    "\u0002\u0002\u0002*-\u0003\u0002\u0002\u0002+)\u0003\u0002\u0002\u0002",
+    "+,\u0003\u0002\u0002\u0002,\u0007\u0003\u0002\u0002\u0002-+\u0003\u0002",
+    "\u0002\u0002.0\u0005\n\u0006\u0002/1\u0005\u0016\f\u00020/\u0003\u0002",
+    "\u0002\u000201\u0003\u0002\u0002\u00021\t\u0003\u0002\u0002\u00022<",
+    "\u0005\f\u0007\u00023<\u0005\u0014\u000b\u00024<\u0007\u0005\u0002\u0002",
+    "5<\u0007\u0007\u0002\u00026<\u0005\u000e\b\u00027<\u0007\u0006\u0002",
+    "\u00028<\u0007\u0015\u0002\u00029<\u0007\u0014\u0002\u0002:<\u0007\f",
+    "\u0002\u0002;2\u0003\u0002\u0002\u0002;3\u0003\u0002\u0002\u0002;4\u0003",
+    "\u0002\u0002\u0002;5\u0003\u0002\u0002\u0002;6\u0003\u0002\u0002\u0002",
+    ";7\u0003\u0002\u0002\u0002;8\u0003\u0002\u0002\u0002;9\u0003\u0002\u0002",
+    "\u0002;:\u0003\u0002\u0002\u0002<\u000b\u0003\u0002\u0002\u0002=J\u0007",
+    "\b\u0002\u0002>H\u0007\r\u0002\u0002?A\u0007\u0012\u0002\u0002@B\u0007",
+    "\u0016\u0002\u0002A@\u0003\u0002\u0002\u0002BC\u0003\u0002\u0002\u0002",
+    "CA\u0003\u0002\u0002\u0002CD\u0003\u0002\u0002\u0002DE\u0003\u0002\u0002",
+    "\u0002EI\u0007\u0011\u0002\u0002FI\u0007\u0013\u0002\u0002GI\u0007\u0011",
+    "\u0002\u0002H?\u0003\u0002\u0002\u0002HF\u0003\u0002\u0002\u0002HG\u0003",
+    "\u0002\u0002\u0002IK\u0003\u0002\u0002\u0002J>\u0003\u0002\u0002\u0002",
+    "JK\u0003\u0002\u0002\u0002KL\u0003\u0002\u0002\u0002LM\u0005\u0004\u0003",
+    "\u0002MN\u0007\t\u0002\u0002N\r\u0003\u0002\u0002\u0002OQ\u0007\u000e",
+    "\u0002\u0002PR\u0007\u0014\u0002\u0002QP\u0003\u0002\u0002\u0002QR\u0003",
+    "\u0002\u0002\u0002RV\u0003\u0002\u0002\u0002SU\u0005\u0010\t\u0002T",
+    "S\u0003\u0002\u0002\u0002UX\u0003\u0002\u0002\u0002VT\u0003\u0002\u0002",
+    "\u0002VW\u0003\u0002\u0002\u0002WY\u0003\u0002\u0002\u0002XV\u0003\u0002",
+    "\u0002\u0002YZ\u0007\u000f\u0002\u0002Z\u000f\u0003\u0002\u0002\u0002",
+    "[^\u0005\u0012\n\u0002\\]\u0007\u0010\u0002\u0002]_\u0005\u0012\n\u0002",
+    "^\\\u0003\u0002\u0002\u0002^_\u0003\u0002\u0002\u0002_b\u0003\u0002",
+    "\u0002\u0002`b\u0007\u0007\u0002\u0002a[\u0003\u0002\u0002\u0002a`\u0003",
+    "\u0002\u0002\u0002b\u0011\u0003\u0002\u0002\u0002cd\t\u0002\u0002\u0002",
+    "d\u0013\u0003\u0002\u0002\u0002ef\t\u0003\u0002\u0002f\u0015\u0003\u0002",
+    "\u0002\u0002gq\u0007\n\u0002\u0002hq\u0007\u000b\u0002\u0002iq\u0007",
+    "\r\u0002\u0002jk\u0007\n\u0002\u0002kq\u0007\r\u0002\u0002lm\u0007\u000b",
+    "\u0002\u0002mq\u0007\r\u0002\u0002no\u0007\r\u0002\u0002oq\u0007\r\u0002",
+    "\u0002pg\u0003\u0002\u0002\u0002ph\u0003\u0002\u0002\u0002pi\u0003\u0002",
+    "\u0002\u0002pj\u0003\u0002\u0002\u0002pl\u0003\u0002\u0002\u0002pn\u0003",
+    "\u0002\u0002\u0002q\u0017\u0003\u0002\u0002\u0002\u000f\u001e$+0;CH",
+    "JQV^ap"].join("");
 
 
 var atn = new antlr4.atn.ATNDeserializer().deserialize(serializedATN);
@@ -82,15 +83,15 @@ var decisionsToDFA = atn.decisionToState.map( function(ds, index) { return new a
 
 var sharedContextCache = new antlr4.PredictionContextCache();
 
-var literalNames = [ null, "'|'", "'\\'", null, null, "'('", "')'", "'*'", 
-                     "'+'", "'.'", "'?'", "'['", "']'", "'-'", "'>'", "'<'", 
-                     "':'", "'^'", "'$'" ];
+var literalNames = [ null, "'|'", "'\\'", null, null, null, "'('", "')'", 
+                     "'*'", "'+'", "'.'", "'?'", "'['", "']'", "'-'", "'>'", 
+                     "'<'", "':'", "'^'", "'$'" ];
 
 var symbolicNames = [ null, null, "BACKSLASH", "ESCAPED_RESERVED_CHAR", 
-                      "CHARACTER_CLASS", "OPEN_PAR", "CLOSE_PAR", "ASTERISK", 
-                      "PLUS", "DOT", "QUESTION_MARK", "OPEN_BRACKET", "CLOSE_BRACKET", 
-                      "DASH", "GREATER_THAN", "LOWER_THAN", "COLON", "CARET", 
-                      "DOLLAR", "CHAR" ];
+                      "BACKREFERENCE", "CHARACTER_CLASS", "OPEN_PAR", "CLOSE_PAR", 
+                      "ASTERISK", "PLUS", "DOT", "QUESTION_MARK", "OPEN_BRACKET", 
+                      "CLOSE_BRACKET", "DASH", "GREATER_THAN", "LOWER_THAN", 
+                      "COLON", "CARET", "DOLLAR", "CHAR" ];
 
 var ruleNames =  [ "main", "regex", "alternative", "expr", "subexpr", "regexGroup", 
                    "complexCharacterClass", "complexCCPiece", "allowedCharInCharacterClass", 
@@ -118,22 +119,23 @@ regexParser.EOF = antlr4.Token.EOF;
 regexParser.T__0 = 1;
 regexParser.BACKSLASH = 2;
 regexParser.ESCAPED_RESERVED_CHAR = 3;
-regexParser.CHARACTER_CLASS = 4;
-regexParser.OPEN_PAR = 5;
-regexParser.CLOSE_PAR = 6;
-regexParser.ASTERISK = 7;
-regexParser.PLUS = 8;
-regexParser.DOT = 9;
-regexParser.QUESTION_MARK = 10;
-regexParser.OPEN_BRACKET = 11;
-regexParser.CLOSE_BRACKET = 12;
-regexParser.DASH = 13;
-regexParser.GREATER_THAN = 14;
-regexParser.LOWER_THAN = 15;
-regexParser.COLON = 16;
-regexParser.CARET = 17;
-regexParser.DOLLAR = 18;
-regexParser.CHAR = 19;
+regexParser.BACKREFERENCE = 4;
+regexParser.CHARACTER_CLASS = 5;
+regexParser.OPEN_PAR = 6;
+regexParser.CLOSE_PAR = 7;
+regexParser.ASTERISK = 8;
+regexParser.PLUS = 9;
+regexParser.DOT = 10;
+regexParser.QUESTION_MARK = 11;
+regexParser.OPEN_BRACKET = 12;
+regexParser.CLOSE_BRACKET = 13;
+regexParser.DASH = 14;
+regexParser.GREATER_THAN = 15;
+regexParser.LOWER_THAN = 16;
+regexParser.COLON = 17;
+regexParser.CARET = 18;
+regexParser.DOLLAR = 19;
+regexParser.CHAR = 20;
 
 regexParser.RULE_main = 0;
 regexParser.RULE_regex = 1;
@@ -271,7 +273,7 @@ regexParser.prototype.regex = function() {
         this.state = 28;
         this._errHandler.sync(this);
         _la = this._input.LA(1);
-        while((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << regexParser.ESCAPED_RESERVED_CHAR) | (1 << regexParser.CHARACTER_CLASS) | (1 << regexParser.OPEN_PAR) | (1 << regexParser.DOT) | (1 << regexParser.OPEN_BRACKET) | (1 << regexParser.CLOSE_BRACKET) | (1 << regexParser.DASH) | (1 << regexParser.GREATER_THAN) | (1 << regexParser.LOWER_THAN) | (1 << regexParser.COLON) | (1 << regexParser.CARET) | (1 << regexParser.DOLLAR) | (1 << regexParser.CHAR))) !== 0)) {
+        while((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << regexParser.ESCAPED_RESERVED_CHAR) | (1 << regexParser.BACKREFERENCE) | (1 << regexParser.CHARACTER_CLASS) | (1 << regexParser.OPEN_PAR) | (1 << regexParser.DOT) | (1 << regexParser.OPEN_BRACKET) | (1 << regexParser.CLOSE_BRACKET) | (1 << regexParser.DASH) | (1 << regexParser.GREATER_THAN) | (1 << regexParser.LOWER_THAN) | (1 << regexParser.COLON) | (1 << regexParser.CARET) | (1 << regexParser.DOLLAR) | (1 << regexParser.CHAR))) !== 0)) {
             this.state = 25;
             this.expr();
             this.state = 30;
@@ -355,7 +357,7 @@ regexParser.prototype.alternative = function() {
         this.state = 41;
         this._errHandler.sync(this);
         _la = this._input.LA(1);
-        while((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << regexParser.ESCAPED_RESERVED_CHAR) | (1 << regexParser.CHARACTER_CLASS) | (1 << regexParser.OPEN_PAR) | (1 << regexParser.DOT) | (1 << regexParser.OPEN_BRACKET) | (1 << regexParser.CLOSE_BRACKET) | (1 << regexParser.DASH) | (1 << regexParser.GREATER_THAN) | (1 << regexParser.LOWER_THAN) | (1 << regexParser.COLON) | (1 << regexParser.CARET) | (1 << regexParser.DOLLAR) | (1 << regexParser.CHAR))) !== 0)) {
+        while((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << regexParser.ESCAPED_RESERVED_CHAR) | (1 << regexParser.BACKREFERENCE) | (1 << regexParser.CHARACTER_CLASS) | (1 << regexParser.OPEN_PAR) | (1 << regexParser.DOT) | (1 << regexParser.OPEN_BRACKET) | (1 << regexParser.CLOSE_BRACKET) | (1 << regexParser.DASH) | (1 << regexParser.GREATER_THAN) | (1 << regexParser.LOWER_THAN) | (1 << regexParser.COLON) | (1 << regexParser.CARET) | (1 << regexParser.DOLLAR) | (1 << regexParser.CHAR))) !== 0)) {
             this.state = 38;
             this.expr();
             this.state = 43;
@@ -515,6 +517,29 @@ ComplexClassContext.prototype.accept = function(visitor) {
 };
 
 
+function BackreferenceContext(parser, ctx) {
+	SubexprContext.call(this, parser);
+    SubexprContext.prototype.copyFrom.call(this, ctx);
+    return this;
+}
+
+BackreferenceContext.prototype = Object.create(SubexprContext.prototype);
+BackreferenceContext.prototype.constructor = BackreferenceContext;
+
+regexParser.BackreferenceContext = BackreferenceContext;
+
+BackreferenceContext.prototype.BACKREFERENCE = function() {
+    return this.getToken(regexParser.BACKREFERENCE, 0);
+};
+BackreferenceContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof regexVisitor ) {
+        return visitor.visitBackreference(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
+
 function GroupPatternContext(parser, ctx) {
 	SubexprContext.call(this, parser);
     SubexprContext.prototype.copyFrom.call(this, ctx);
@@ -661,7 +686,7 @@ regexParser.prototype.subexpr = function() {
     var localctx = new SubexprContext(this, this._ctx, this.state);
     this.enterRule(localctx, 8, regexParser.RULE_subexpr);
     try {
-        this.state = 56;
+        this.state = 57;
         this._errHandler.sync(this);
         switch(this._input.LA(1)) {
         case regexParser.OPEN_PAR:
@@ -699,22 +724,28 @@ regexParser.prototype.subexpr = function() {
             this.state = 52;
             this.complexCharacterClass();
             break;
-        case regexParser.DOLLAR:
-            localctx = new DollarAnchorContext(this, localctx);
+        case regexParser.BACKREFERENCE:
+            localctx = new BackreferenceContext(this, localctx);
             this.enterOuterAlt(localctx, 6);
             this.state = 53;
+            this.match(regexParser.BACKREFERENCE);
+            break;
+        case regexParser.DOLLAR:
+            localctx = new DollarAnchorContext(this, localctx);
+            this.enterOuterAlt(localctx, 7);
+            this.state = 54;
             this.match(regexParser.DOLLAR);
             break;
         case regexParser.CARET:
             localctx = new CaretAnchorContext(this, localctx);
-            this.enterOuterAlt(localctx, 7);
-            this.state = 54;
+            this.enterOuterAlt(localctx, 8);
+            this.state = 55;
             this.match(regexParser.CARET);
             break;
         case regexParser.DOT:
             localctx = new DotPatternContext(this, localctx);
-            this.enterOuterAlt(localctx, 8);
-            this.state = 55;
+            this.enterOuterAlt(localctx, 9);
+            this.state = 56;
             this.match(regexParser.DOT);
             break;
         default:
@@ -815,40 +846,40 @@ regexParser.prototype.regexGroup = function() {
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 58;
+        this.state = 59;
         this.match(regexParser.OPEN_PAR);
-        this.state = 71;
+        this.state = 72;
         this._errHandler.sync(this);
         _la = this._input.LA(1);
         if(_la===regexParser.QUESTION_MARK) {
-            this.state = 59;
+            this.state = 60;
             this.match(regexParser.QUESTION_MARK);
-            this.state = 69;
+            this.state = 70;
             this._errHandler.sync(this);
             switch(this._input.LA(1)) {
             case regexParser.LOWER_THAN:
-                this.state = 60;
+                this.state = 61;
                 this.match(regexParser.LOWER_THAN);
-                this.state = 62; 
+                this.state = 63; 
                 this._errHandler.sync(this);
                 _la = this._input.LA(1);
                 do {
-                    this.state = 61;
+                    this.state = 62;
                     localctx._CHAR = this.match(regexParser.CHAR);
                     localctx.name.push(localctx._CHAR);
-                    this.state = 64; 
+                    this.state = 65; 
                     this._errHandler.sync(this);
                     _la = this._input.LA(1);
                 } while(_la===regexParser.CHAR);
-                this.state = 66;
+                this.state = 67;
                 this.match(regexParser.GREATER_THAN);
                 break;
             case regexParser.COLON:
-                this.state = 67;
+                this.state = 68;
                 localctx.nonCapture = this.match(regexParser.COLON);
                 break;
             case regexParser.GREATER_THAN:
-                this.state = 68;
+                this.state = 69;
                 localctx.atomic = this.match(regexParser.GREATER_THAN);
                 break;
             default:
@@ -856,9 +887,9 @@ regexParser.prototype.regexGroup = function() {
             }
         }
 
-        this.state = 73;
-        this.regex();
         this.state = 74;
+        this.regex();
+        this.state = 75;
         this.match(regexParser.CLOSE_PAR);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -935,27 +966,27 @@ regexParser.prototype.complexCharacterClass = function() {
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 76;
+        this.state = 77;
         this.match(regexParser.OPEN_BRACKET);
-        this.state = 78;
+        this.state = 79;
         this._errHandler.sync(this);
         var la_ = this._interp.adaptivePredict(this._input,8,this._ctx);
         if(la_===1) {
-            this.state = 77;
+            this.state = 78;
             localctx.negated = this.match(regexParser.CARET);
 
         }
-        this.state = 83;
+        this.state = 84;
         this._errHandler.sync(this);
         _la = this._input.LA(1);
         while((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << regexParser.ESCAPED_RESERVED_CHAR) | (1 << regexParser.CHARACTER_CLASS) | (1 << regexParser.OPEN_PAR) | (1 << regexParser.CLOSE_PAR) | (1 << regexParser.ASTERISK) | (1 << regexParser.PLUS) | (1 << regexParser.DOT) | (1 << regexParser.QUESTION_MARK) | (1 << regexParser.OPEN_BRACKET) | (1 << regexParser.DASH) | (1 << regexParser.GREATER_THAN) | (1 << regexParser.LOWER_THAN) | (1 << regexParser.COLON) | (1 << regexParser.CARET) | (1 << regexParser.DOLLAR) | (1 << regexParser.CHAR))) !== 0)) {
-            this.state = 80;
+            this.state = 81;
             this.complexCCPiece();
-            this.state = 85;
+            this.state = 86;
             this._errHandler.sync(this);
             _la = this._input.LA(1);
         }
-        this.state = 86;
+        this.state = 87;
         this.match(regexParser.CLOSE_BRACKET);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -1060,7 +1091,7 @@ regexParser.prototype.complexCCPiece = function() {
     var localctx = new ComplexCCPieceContext(this, this._ctx, this.state);
     this.enterRule(localctx, 14, regexParser.RULE_complexCCPiece);
     try {
-        this.state = 94;
+        this.state = 95;
         this._errHandler.sync(this);
         switch(this._input.LA(1)) {
         case regexParser.ESCAPED_RESERVED_CHAR:
@@ -1080,15 +1111,15 @@ regexParser.prototype.complexCCPiece = function() {
         case regexParser.CHAR:
             localctx = new CcPiece_ResponeContext(this, localctx);
             this.enterOuterAlt(localctx, 1);
-            this.state = 88;
+            this.state = 89;
             this.allowedCharInCharacterClass();
-            this.state = 91;
+            this.state = 92;
             this._errHandler.sync(this);
             var la_ = this._interp.adaptivePredict(this._input,10,this._ctx);
             if(la_===1) {
-                this.state = 89;
-                this.match(regexParser.DASH);
                 this.state = 90;
+                this.match(regexParser.DASH);
+                this.state = 91;
                 this.allowedCharInCharacterClass();
 
             }
@@ -1096,7 +1127,7 @@ regexParser.prototype.complexCCPiece = function() {
         case regexParser.CHARACTER_CLASS:
             localctx = new CcPiece_EscapeContext(this, localctx);
             this.enterOuterAlt(localctx, 2);
-            this.state = 93;
+            this.state = 94;
             this.match(regexParser.CHARACTER_CLASS);
             break;
         default:
@@ -1213,7 +1244,7 @@ regexParser.prototype.allowedCharInCharacterClass = function() {
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 96;
+        this.state = 97;
         _la = this._input.LA(1);
         if(!((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << regexParser.ESCAPED_RESERVED_CHAR) | (1 << regexParser.OPEN_PAR) | (1 << regexParser.CLOSE_PAR) | (1 << regexParser.ASTERISK) | (1 << regexParser.PLUS) | (1 << regexParser.DOT) | (1 << regexParser.QUESTION_MARK) | (1 << regexParser.OPEN_BRACKET) | (1 << regexParser.DASH) | (1 << regexParser.GREATER_THAN) | (1 << regexParser.LOWER_THAN) | (1 << regexParser.COLON) | (1 << regexParser.CARET) | (1 << regexParser.DOLLAR) | (1 << regexParser.CHAR))) !== 0))) {
         this._errHandler.recoverInline(this);
@@ -1297,7 +1328,7 @@ regexParser.prototype.atomicChar = function() {
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 98;
+        this.state = 99;
         _la = this._input.LA(1);
         if(!((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << regexParser.CLOSE_BRACKET) | (1 << regexParser.DASH) | (1 << regexParser.GREATER_THAN) | (1 << regexParser.LOWER_THAN) | (1 << regexParser.COLON) | (1 << regexParser.CHAR))) !== 0))) {
         this._errHandler.recoverInline(this);
@@ -1506,55 +1537,55 @@ regexParser.prototype.quantifier = function() {
     var localctx = new QuantifierContext(this, this._ctx, this.state);
     this.enterRule(localctx, 20, regexParser.RULE_quantifier);
     try {
-        this.state = 109;
+        this.state = 110;
         this._errHandler.sync(this);
         var la_ = this._interp.adaptivePredict(this._input,12,this._ctx);
         switch(la_) {
         case 1:
             localctx = new AsteriskQuantifierContext(this, localctx);
             this.enterOuterAlt(localctx, 1);
-            this.state = 100;
+            this.state = 101;
             this.match(regexParser.ASTERISK);
             break;
 
         case 2:
             localctx = new PlusQuantifierContext(this, localctx);
             this.enterOuterAlt(localctx, 2);
-            this.state = 101;
+            this.state = 102;
             this.match(regexParser.PLUS);
             break;
 
         case 3:
             localctx = new QuestionQuantifierContext(this, localctx);
             this.enterOuterAlt(localctx, 3);
-            this.state = 102;
+            this.state = 103;
             this.match(regexParser.QUESTION_MARK);
             break;
 
         case 4:
             localctx = new LazyAsteriskQuantifierContext(this, localctx);
             this.enterOuterAlt(localctx, 4);
-            this.state = 103;
-            this.match(regexParser.ASTERISK);
             this.state = 104;
+            this.match(regexParser.ASTERISK);
+            this.state = 105;
             this.match(regexParser.QUESTION_MARK);
             break;
 
         case 5:
             localctx = new LazyPlusQuantifierContext(this, localctx);
             this.enterOuterAlt(localctx, 5);
-            this.state = 105;
-            this.match(regexParser.PLUS);
             this.state = 106;
+            this.match(regexParser.PLUS);
+            this.state = 107;
             this.match(regexParser.QUESTION_MARK);
             break;
 
         case 6:
             localctx = new LazyQuestionQuantifierContext(this, localctx);
             this.enterOuterAlt(localctx, 6);
-            this.state = 107;
-            this.match(regexParser.QUESTION_MARK);
             this.state = 108;
+            this.match(regexParser.QUESTION_MARK);
+            this.state = 109;
             this.match(regexParser.QUESTION_MARK);
             break;
 

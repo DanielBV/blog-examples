@@ -1,8 +1,8 @@
-const {RegexAlternative, Regex,  AtomicPattern, ComplexClass, CaretAnchor, DollarAnchor} = require('../../grammar/ast');
+const {RegexAlternative, Regex,  AtomicPattern, ComplexClass, CaretAnchor, DollarAnchor, Backreference} = require('../../grammar/ast');
 const {EPSILON} = require('../../grammar/astBuilder');
 const {ASTERISK, LAZY_ASTERISK, PLUS, LAZY_PLUS, OPTIONAL, LAZY_OPTIONAL} = require('../../grammar/astBuilder');
 const {CharacterMatcher, EngineNFA, EpsilonMatcher, CustomMatcher, StartOfStringMatcher, EndOfStringMatcher, 
-    EndOfLineMatcher, StartOfLineMatcher} = require('./nfa');
+    EndOfLineMatcher, StartOfLineMatcher, BackreferenceMatcher} = require('./nfa');
 
 const EPSILON_MATCHER = new EpsilonMatcher();
 
@@ -50,12 +50,12 @@ class NFABuilder {
 
     _singleRegexToNFA(regexAST) {
         let nfa = null;
+        // A regex is just a series of subpatterns. We iterate through them and concatenate them to 'nfa'
+        const groupName = regexAST.isCapturingGroup() ? regexAST.groupName || this.newGroup() : null;
         if (regexAST.subpatterns.length === 0) {
             // Handles empty capturing groups
             nfa = this._oneStepNFA(new EpsilonMatcher());
         }
-        // A regex is just a series of subpatterns. We iterate through them and concatenate them to 'nfa'
-        const groupName = regexAST.isCapturingGroup() ? regexAST.groupName || this.newGroup() : null;
         for (const c of regexAST.subpatterns) {
             let baseBuilder, current;
     
@@ -63,6 +63,7 @@ class NFABuilder {
             if (c.child instanceof AtomicPattern) {
                 baseBuilder = () => this._atomicPatternNFA(c.child.char);
             } else if (c.child instanceof RegexAlternative || c.child instanceof Regex) { // Groups
+
                 baseBuilder = () => this._regexToNFA(c.child);
             } else if (c.child instanceof ComplexClass) {
                 baseBuilder = () => this._oneStepNFA(new CustomMatcher((char) => c.child.matches(char), c.child.name));
@@ -70,7 +71,9 @@ class NFABuilder {
                 baseBuilder = () => this._oneStepNFA(this.modes.multiline ? new EndOfLineMatcher() : new EndOfStringMatcher());
             else if (c.child instanceof CaretAnchor)
                 baseBuilder = () => this._oneStepNFA(this.modes.multiline ? new StartOfLineMatcher() : new StartOfStringMatcher());
-    
+            else if (c.child instanceof Backreference) 
+                baseBuilder = () => this._oneStepNFA(new BackreferenceMatcher(c.child.group))
+
             //Second: We apply the quantifier (if there is one)
             if (c.quantifier === ASTERISK || c.quantifier === LAZY_ASTERISK) {
                 current = this._asterisk(() => baseBuilder(), c.quantifier === LAZY_ASTERISK);
@@ -94,6 +97,7 @@ class NFABuilder {
                 nfa.appendNFA(current, nfa.endingStates[0]);
         }
         if (groupName !== null) nfa.addGroup(nfa.initialState, nfa.endingStates[0], groupName); 
+        if (regexAST.isAtomic()) nfa.setNukeState(nfa.endingStates[0]);
         return nfa;
     }
 
@@ -166,6 +170,7 @@ class NFABuilder {
         endingStates.forEach(x => nfa.addTransition(x, end, new EpsilonMatcher()));
         nfa.setEndingStates([end]);
         if (groupName !== null) nfa.addGroup(start, end, groupName);
+        if (alternativeAst.isAtomic()) nfa.setNukeState(nfa.endingStates[0]);
         return nfa;
     }
 }

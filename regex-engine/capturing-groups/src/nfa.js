@@ -159,7 +159,7 @@ class EngineNFA {
                     if (matcher.isEpsilon()) {
                         // Don't follow the transition. We already have been in that state
                         if (memory.EPSILON_VISITED.includes(toState.name))
-                            break;
+                            continue;
                         copyMemory.EPSILON_VISITED.push(currentState.name);
                     } else 
                         copyMemory.EPSILON_VISITED = [];
